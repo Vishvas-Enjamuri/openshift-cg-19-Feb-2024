@@ -1,0 +1,33 @@
+ 269  oc get secrets
+  270  echo "amitvashist7@outlook.com" > /root/username.txt
+  271  echo "Pass@word432!" > /root/password.txt
+  272  ls
+  273  cat password.txt
+  274  cat username.txt
+  275  oc create secret --help
+  276  oc create secret generic --help
+  277  oc create secret generic mysecrets --from-file=/root/username.txt  --from-file=/root/password.txt
+  278  ls
+  279  rm -rf password.txt username.txt
+  280  ls
+  281  oc  get secrets
+  282  oc  describe secrets mysecrets
+  283  oc edit secrets mysecrets
+  284  ls
+  285  cd india/
+  286  ls
+  287  cd 02-K8s/
+  288  ls
+  289  cd 05-Secrets/
+  290  ls
+  291  cat 1-helloworld-secrets.yaml
+  292  oc apply -f 1-helloworld-secrets.yaml
+  293  oc get secrets
+  294  ls
+  295  cat 2-helloworld-secrets-volumes.yaml
+  296  oc  get secrets
+  297  oc  apply -f 2-helloworld-secrets-volumes.yaml
+  298  oc get pods
+  299  oc describe pods helloworld-deployment-577bdfb78d-86r69
+  300  ls
+  301  oc exec -it helloworld-deployment-577bdfb78d-86r69 -- sh
