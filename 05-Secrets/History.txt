@@ -1,4 +1,17 @@
- 269  oc get secrets
+  ## Create a Docker Secrets 
+
+# Create a Secret in K8s for Docker Registry
+```
+oc create secret generic regcred --dockerusername= --dockerpassword
+
+oc get secrets
+```
+
+
+
+
+
+  269  oc get secrets
   270  echo "amitvashist7@outlook.com" > /root/username.txt
   271  echo "Pass@word432!" > /root/password.txt
   272  ls
