@@ -18,7 +18,7 @@
   147  oc  get pods --show-labels
   148  oc describe svc helloworld-deployment
   149  ls
-  150  oc  get svc 
+  150  oc  get svc ; oc expose service helloworl-deployment
   151  oc  delete svc helloworld-deployment
   152  ls
   153  vim 02-helloworld-svc.yaml
