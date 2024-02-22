@@ -7,7 +7,7 @@ spec:
   ports:
   - port: 31007
     nodePort: 31007
-    targetPort: myapp-port
+    targetPort: 8081
     protocol: TCP
   selector:
     app: python-webapp
