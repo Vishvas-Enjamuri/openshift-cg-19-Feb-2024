@@ -2,32 +2,31 @@
 
 ## Create a Pod Reader Role
 ```
-kubectl create role pod-reader --verb=get,list,watch --resource=pods --dry-run -o yaml > 17-RBAC/pod-reader-role.yaml
-cat 17-RBAC/pod-reader-role.yaml 
-kubectl create -f 17-RBAC/pod-reader-role.yaml
+oc create role pod-reader --verb=get,list,watch --resource=pods --dry-run -o yaml > pod-reader-role.yaml
+oc create -f pod-reader-role.yaml
 ```
 
 ## Create a POD Reader RoleBinding 
 ```
-kubectl create rolebinding --help
-kubectl create rolebinding read-pod-binding --role=pod-reader --user=amit --dry-run -o yaml > 17-RBAC/read-pod-binding.yaml
-kubectl create -f 17-RBAC/read-pod-binding.yaml
-kubectl auth can-i get pods --user=amit 
+oc create rolebinding --help
+oc create rolebinding read-pod-binding --role=pod-reader --user=amit --dry-run -o yaml > read-pod-binding.yaml
+oc create -f read-pod-binding.yaml
+oc auth can-i get pods --user=amit 
 ```
 
 ## Check the Roles & Context with role Permissions:
 ```
-kubectl get role
-kubectl get rolebinding 
+oc get role
+oc get rolebinding 
 
-kubectl config get-contexts
-kubectl config use-context amit@kubernetes
-kubectl config get-contexts
+oc config get-contexts
+oc config use-context amit@kubernetes
+oc config get-contexts
 
-kubectl get pods 
-kubectl get pods -n myspace
-kubectl delete pods  helloworld-deployment-6dc57c75b4-8nlmw -n myspace
-kubectl delete deploy  helloworld-deployment -n myspace
+oc get pods 
+oc get pods -n myspace
+oc delete pods  helloworld-deployment-6dc57c75b4-8nlmw -n myspace
+oc delete deploy  helloworld-deployment -n myspace
 ```
 
 
@@ -36,34 +35,34 @@ kubectl delete deploy  helloworld-deployment -n myspace
 
 ## View Cluster & Binding via kubernetes-admin context
 ```
-kubectl config get-contexts
-kubectl config use-context kubernetes-admin@kubernetes
-kubectl config get-contexts
-kubectl get pods -n kube-system
+oc config get-contexts
+oc config use-context kubernetes-admin@kubernetes
+oc config get-contexts
+oc get pods -n kube-system
 
-kubectl get clusterrole
-kubectl describe clusterrole cluster-admin
-kubectl get clusterrolebinding
-kubectl describe clusterrolebinding cluster-admin
+oc get clusterrole
+oc describe clusterrole cluster-admin
+oc get clusterrolebinding
+oc describe clusterrolebinding cluster-admin
 ```
 
 ## Create a Clusterole binding with existing cluster admin role
 ```
-kubectl create clusterrolebinding admin-user-amit --clusterrole=cluster-admin --user=amit  --dry-run 
-kubectl create clusterrolebinding admin-user-amit --clusterrole=cluster-admin --user=amit  --dry-run -o yaml > amit-cluster-rolebinding.yaml
+oc create clusterrolebinding admin-user-amit --clusterrole=cluster-admin --user=amit  --dry-run 
+oc create clusterrolebinding admin-user-amit --clusterrole=cluster-admin --user=amit  --dry-run -o yaml > amit-cluster-rolebinding.yaml
 cat amit-cluster-rolebinding.yaml 
 
-kubectl create -f amit-cluster-rolebinding.yaml
-kubectl get clusterrolebinding
-kubectl describe clusterrolebinding admin-user-amit
+oc create -f amit-cluster-rolebinding.yaml
+oc get clusterrolebinding
+oc describe clusterrolebinding admin-user-amit
 ```
 
 ## Change the conetext & validate the role permissions
 ```
-kubectl config get-contexts
-kubectl config use-context amit@kubernetes
-kubectl get pods 
-kubectl get pods --all-namespaces
+oc config get-contexts
+oc config use-context amit@kubernetes
+oc get pods 
+oc get pods --all-namespaces
    
 ```
 
