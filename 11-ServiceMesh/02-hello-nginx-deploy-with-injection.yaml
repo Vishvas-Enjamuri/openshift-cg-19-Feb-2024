@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: hello-nginx-2
+  name: hello-nginx-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-nginx-2
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: 'true'
+      creationTimestamp: null
+      labels:
+        app: hello-nginx-2
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        ports:
+        - containerPort: 80
+        resources: {}
+status: {}
