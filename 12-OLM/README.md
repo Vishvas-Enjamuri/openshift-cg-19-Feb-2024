@@ -50,4 +50,7 @@ oc get api-resources
 oc get apiservice
 ```
 
-
+## Check the OLM Cluster Operators 
+```
+oc get co 
+```
