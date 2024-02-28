@@ -44,3 +44,26 @@ oc get pods -n jenkins-demo
       jenkinsfilePath: Jenkinsfile
 
 ```
+
+
+
+### Step 5: Check the CICD Build Job 
+
+### Step 6: Click on view logs -> you will be redirected to jenkins -> check the logs -> In the logs you probably notices it stuck & looking for maven-xx1z agent to be running. 
+
+### Step 7: Most likely Maven Agent Pod is not able to pull the image from internal openshift registry or repository: 
+
+### Step 8: To be sure which image its try to pull - check the pod logs or go inside jenkins pod & look for config.xml. 
+```
+grep -i maven /var/lib/jenkins/config.xml
+```
+```
+sh-4.4$ grep -i maven /var/lib/jenkins/config.xml
+          <id>maven-50e53b0fd012e7ade37fd375f47db620</id>
+          <name>maven</name>
+          <label>maven</label>
+              <image>image-registry.openshift-image-registry.svc:5000/openshift/jenkins-agent-maven:latest</image>
+sh-4.4$ 
+
+```
+
