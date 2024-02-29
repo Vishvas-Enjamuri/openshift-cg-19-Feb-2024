@@ -117,3 +117,20 @@ podman push  image-registry.openshift-image-registry.svc:5000/openshift/jenkins-
 
 #### Step 11: Now go to the GUI & Check if the job is normalize or not, in case not cancel the current build & retrigger new build with same build config. 
 
+
+
+### It Time to Trigger Our Job Based on GitHub Changes or push, this can achived via Poll SCM or Webhook. 
+
+
+#### Step 1: Let's try poll SCM, for this please login to jenkins & edit the cicd job & update the job as follow: 
+```
+[*] PollSCM 
+```
+#### Step 2: Update the job schedule to check the Git Repo in every 5 mins for the changes & if found trigger the job. 
+```
+*/5 * * * *
+```
+
+
+
+#### Step
