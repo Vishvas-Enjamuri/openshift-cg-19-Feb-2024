@@ -65,5 +65,55 @@ sh-4.4$ grep -i maven /var/lib/jenkins/config.xml
               <image>image-registry.openshift-image-registry.svc:5000/openshift/jenkins-agent-maven:latest</image>
 sh-4.4$ 
 
+
 ```
+#### Step 9: Due to the imagepull back off error, we come to know that "Jenkins-agent-maven" image is missing in our internal openshift registory
+
+#### Step 10: Now we need to download "Jenkins-agent-maven" image & publish the same in our internal openshift registory & for the same we need to follow below steps: 
+
+
+#### Step 10.1 : We need to login to our master node in dehub host mode: 
+```
+oc get nodes 
+```
+```
+oc debug node/<masternodename>
+```
+```
+chroot /host
+```
+
+#### Step 10.2 : Check the existing & download the "Jenkins-agent-maven" image from external Repo : Quay.io
+
+```
+crictl images 
+```
+
+```
+crictl pull quay.io/openshift/origin-jenkins-agent-maven
+```
+
+#### Step 10.3: Tag the download image to point to internal openshift registory
+```
+podman tag quay.io/openshift/origin-jenkins-agent-maven:latest image-registry.openshift-image-registry.svc:5000/openshift/jenkins-agent-maven:latest
+```
+
+#### Step 10.4: Authenticate with Internal Openshift Registory
+```
+oc whoami
+```
+```
+oc whoami --show-token
+```
+
+#### Step 10.5: Push the image into internal openshift registory
+```
+podman login -u kubeadmin -p <kubeadmin-user-token>  image-registry.openshift-image-registry.svc:5000
+```
+
+```
+podman push  image-registry.openshift-image-registry.svc:5000/openshift/jenkins-agent-maven:latest
+```
+
+#### Step 11: Now go to the GUI & Check if the job is normalize or not, in case not cancel the current build & retrigger new build with same build config. 
 
