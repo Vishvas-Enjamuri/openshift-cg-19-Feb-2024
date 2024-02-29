@@ -146,6 +146,7 @@ oc set triggers bc/cicd --from-github -n jenkins-demo
 #### Step 3: Go to Github -> Select the Repo -> Settings -> Webhook -> add webhook:
 ```
 URL : weburl 
+type: application/json
 Secret: extarcted secrets
 ```
 
