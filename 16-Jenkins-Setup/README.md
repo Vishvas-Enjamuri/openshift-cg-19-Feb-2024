@@ -133,4 +133,20 @@ podman push  image-registry.openshift-image-registry.svc:5000/openshift/jenkins-
 
 
 
-#### Step
+#### Step 1: In case you want to config a webhook then we need create a trigger in openshift build config :
+```
+oc get bc -n jenkins-demo 
+```
+```
+oc set triggers bc/cicd --from-github -n jenkins-demo
+```
+
+#### Step 2: Get hold on WebHook Url & Secrets from GUI -> Inside the build config.
+
+#### Step 3: Go to Github -> Select the Repo -> Settings -> Webhook -> add webhook:
+```
+URL : weburl 
+Secret: extarcted secrets
+```
+
+#### Step 4: Now make some changes in side the repo to check webhook in action, however for webhook callurl should be reachable from the Sources ( GitHUB ):
