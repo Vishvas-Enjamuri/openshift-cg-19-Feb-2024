@@ -45,7 +45,7 @@ openssl x509 -in star-ocp-crc-custom-crt.pem -text -noout
 ```
 
 
-## Patch API Server Cert in CRC Setup to SNO Cluster 
+## Patch API Server Cert in CRC Setup or SNO Cluster 
 
 ## Create a TLS Secret for API Server
 
@@ -60,12 +60,12 @@ oc config view --flatten > kubeconfig-newapi
 ```
 
 3. Create a secret that contains the certificate chain and private key in the openshift-config namespace.
- 
 ```
 oc create secret tls api-secret --cert=ocp-crc-custom-crt.pem --key=ocp-crc-custom-key.pem -n openshift-config
 ```
 
-4. Now we need to update windows "/etc/hosts" file for out api domain dns resolution: 
+4. Now we need to update windows "/etc/hosts" file for out api domain dns resolution:
+   
 4.1 Go to the following path for host file "C:\Windows\System32\drivers\etc", append the existing entry with you api fqdn such "api.ocp-crc.domain.biz" 
 
 
@@ -77,11 +77,11 @@ oc create secret tls api-secret --cert=ocp-crc-custom-crt.pem --key=ocp-crc-cust
 ```
 
 
-5. As we know "servingCerts" Spec is missing in CRC Deploy, hence we need to add the same manually  
+5. As we know "servingCerts" Spec is missing in API Server Cluster Config in case of CRC Based Deployment, hence we need to add the same manually  
 ```
 oc edit apiserver cluster -o yaml
 ```
-```
+
 #### Add the following Lines 
 ```
 spec:
@@ -109,12 +109,14 @@ oc get clusteroperators kube-apiserver
 ```
 NAME             VERSION   AVAILABLE   PROGRESSING   DEGRADED   SINCE
 kube-apiserver   4.14.0     True        False         False      145m
-
+```
 
 7. Now you can logout & re-login with new api fqdn to test: 
 ```
 PS C:\Users\openshift2> oc logout
 Logged "kubeadmin" out on "https://api.crc.testing:6443"
+```
+```
 PS C:\Users\openshift2> oc login -u kubeadmin https://api.ocp-training.domain.biz:6443
 ```
 
