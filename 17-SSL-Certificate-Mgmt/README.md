@@ -60,7 +60,6 @@ oc config view --flatten > kubeconfig-newapi
 ```
 
 3. Create a secret that contains the certificate chain and private key in the openshift-config namespace.
- 
 ```
 oc create secret tls api-secret --cert=ocp-crc-custom-crt.pem --key=ocp-crc-custom-key.pem -n openshift-config
 ```
@@ -81,7 +80,7 @@ oc create secret tls api-secret --cert=ocp-crc-custom-crt.pem --key=ocp-crc-cust
 ```
 oc edit apiserver cluster -o yaml
 ```
-```
+
 #### Add the following Lines 
 ```
 spec:
