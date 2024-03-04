@@ -94,4 +94,56 @@ platform:
 openshift-install create cluster --dir ./ --log-level=debug |& tee create-cluster.log 
 ```
 
+#### 13. Post Installation, we'll get a following message:  
+
+```
+level=info msg=To access the cluster as the system:admin user when using 'oc', run 'export KUBECONFIG=/root/openshift/auth/kubeconfig'
+level=info msg=Access the OpenShift web-console here: https://console-openshift-console.apps.ocp-4-14-clust.ocp-azure.com
+level=info msg=Login to the console with user: "kubeadmin", and password: "6EF7s-RNNXw-Gc9Vt-nwKnR"
+level=debug msg=Time elapsed per stage:
+level=debug msg=              vnet: 12m44s
+level=debug msg=         bootstrap: 2m45s
+level=debug msg=           cluster: 4m34s
+level=debug msg=Bootstrap Complete: 21m41s
+level=debug msg=               API: 16s
+level=debug msg= Bootstrap Destroy: 1m30s
+level=debug msg= Cluster Operators: 14m10s
+level=info msg=Time elapsed: 58m18s
+```
+
+#### 14. Now try to open openshift console: 
+```
+curl -k https://console-openshift-console.apps.ocp-4-14-clust.ocp-azure.com
+```
+
+#### 15. In Case the above command didn't respond: 
+
+#### 15.1 Check the DNS Resolution: 
+```
+nslookup console-openshift-console.apps.ocp-4-14-clust.ocp-azure.com
+```
+
+#### 15.2 Check the Port Connectivity 
+```
+telnet console-openshift-console.apps.ocp-4-14-clust.ocp-azure.com 443
+```
+
+#### In case Telent Fails, then check the subnet & security group binding or assocation. 
+
+#### Go to VNET -> Select Jumpbox Subnet -> Select the Secutity group from drop down as Jumpbox SG. 
+#### Go to VNET -> Select Ocp-ctl Subnet -> Select the Secutity group from drop down as ocp-xx11-y1 SG.
+
+#### Now update the Jumpbox SG Group for Inbound Traffice Rules for Port [80,443] 
+
+
+#### 16. Now try to open openshift console, it should work. 
+```
+curl -k https://console-openshift-console.apps.ocp-4-14-clust.ocp-azure.com
+```
+
+#### 17. In case you want to access the console outside Azure Nodes, such your own laptop then we need to update our local resolver for the same : "/etc/hosts"
+```
+
+20.23.210.11 console-openshift-console.apps.ocp14-4.ocp-azure.com *.apps.ocp14-4.ocp-azure.com oauth-openshift.apps.ocp14-4.ocp-azure.com
+```
 
